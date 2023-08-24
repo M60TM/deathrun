@@ -227,6 +227,20 @@ void Config_Apply(int client)
 		
 		if (IsValidEntity(item))
 		{
+			if (dr_only_melee.BoolValue)
+			{
+				if (slot != ItemSlot_Melee)
+				{
+					char classname[256];
+					GetEntityClassname(item, classname, sizeof(classname));
+					
+					if (StrContains(classname, "tf_wearable") == -1 && StrContains(classname, "tf_weapon_invis") == -1)
+						TF2_RemoveWeaponSlot(client, slot);
+					
+					continue;
+				}
+			}
+			
 			int defindex = GetEntProp(item, Prop_Send, "m_iItemDefinitionIndex");
 			
 			ItemConfig config;
@@ -299,5 +313,12 @@ void Config_Apply(int client)
 				}
 			}
 		}
+	}
+
+	if (dr_only_melee.BoolValue)
+	{
+		int weapon = GetPlayerWeaponSlot(client, ItemSlot_Melee);
+		if (IsValidEntity(weapon))
+			TF2Util_SetPlayerActiveWeapon(client, weapon);
 	}
 }

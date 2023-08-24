@@ -89,14 +89,31 @@ public MRESReturn DHookCallback_CalculateMaxSpeed_Post(int client, DHookReturn r
 	if (GameRules_GetRoundState() != RoundState_Preround && IsClientInGame(client))
 	{
 		//Modify player speed based on their class
-		TFClassType class = TF2_GetPlayerClass(client);
-		if (class != TFClass_Unknown)
+		if (dr_speed_type.IntValue == 1)
 		{
-			float speed = ret.Value;
-			float modifier = dr_speed_modifier[0].FloatValue + dr_speed_modifier[class].FloatValue;
-			ret.Value = Max(speed + modifier, 1.0);
+			if (TF2_IsPlayerInCondition(client, TFCond_Charging))
+				return MRES_Ignored;
 			
+			float speed = TF2_GetClientTeam(client) == TFTeam_Red ? dr_set_speed[0].FloatValue : dr_set_speed[1].FloatValue;
+			
+			if (TF2_IsPlayerInCondition(client, TFCond_SpeedBuffAlly))
+				speed *= 1.15;
+			
+			ret.Value = Max(speed, 1.0);
+				
 			return MRES_Supercede;
+		}
+		else
+		{
+			TFClassType class = TF2_GetPlayerClass(client);
+			if (class != TFClass_Unknown)
+			{
+				float speed = ret.Value;
+				float modifier = dr_speed_modifier[0].FloatValue + dr_speed_modifier[class].FloatValue;
+				ret.Value = Max(speed + modifier, 1.0);
+				
+				return MRES_Supercede;
+			}
 		}
 	}
 	

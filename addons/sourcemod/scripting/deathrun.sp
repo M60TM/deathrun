@@ -23,6 +23,7 @@
 #include <sdkhooks>
 #include <clientprefs>
 #include <tf2_stocks>
+#include <tf2utils>
 #include <dhooks>
 #include <tf2attributes>
 #include <morecolors>
@@ -112,7 +113,10 @@ ConVar dr_activator_count;
 ConVar dr_activator_health_modifier;
 ConVar dr_activator_healthbar;
 ConVar dr_backstab_damage;
+ConVar dr_speed_type;
 ConVar dr_speed_modifier[view_as<int>(TFClass_Engineer) + 1];
+ConVar dr_set_speed[2];
+ConVar dr_only_melee;
 
 ArrayList g_CurrentActivators;
 

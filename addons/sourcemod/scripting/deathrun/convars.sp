@@ -41,6 +41,7 @@ void ConVars_Init()
 	dr_activator_healthbar = CreateConVar("dr_activator_healthbar", "1", "If enabled, the activator health will be displayed on screen.");
 	dr_activator_healthbar.AddChangeHook(OnConVarChanged_ActivatorHealthBar);
 	dr_backstab_damage = CreateConVar("dr_backstab_damage", "750.0", "Damage dealt to the activator by backstabs. Set to 0 to let the game determine the damage.");
+	dr_speed_type = CreateConVar("dr_speed_type", "1", "Set to 0 to use original speed modifier. Set to 1 to use team-speed", _, true, 0.0, true, 1.0);
 	dr_speed_modifier[0] = CreateConVar("dr_speed_modifier", "0.0", "Maximum speed modifier for all classes, in HU/s.");
 	dr_speed_modifier[1] = CreateConVar("dr_speed_modifier_scout", "0.0", "Maximum speed modifier for Scout, in HU/s.");
 	dr_speed_modifier[2] = CreateConVar("dr_speed_modifier_sniper", "0.0", "Maximum speed modifier for Sniper, in HU/s.");
@@ -51,7 +52,10 @@ void ConVars_Init()
 	dr_speed_modifier[7] = CreateConVar("dr_speed_modifier_pyro", "0.0", "Maximum speed modifier for Pyro, in HU/s.");
 	dr_speed_modifier[8] = CreateConVar("dr_speed_modifier_spy", "0.0", "Maximum speed modifier for Spy, in HU/s.");
 	dr_speed_modifier[9] = CreateConVar("dr_speed_modifier_engineer", "0.0", "Maximum speed modifier for Engineer, in HU/s.");
-	
+	dr_set_speed[0] = CreateConVar("dr_red_team_speed", "300.0", "Maximum speed for red team, in HU/s.");
+	dr_set_speed[1] = CreateConVar("dr_blue_team_speed", "400.0", "Maximum speed for blue team, in HU/s.");
+	dr_only_melee = CreateConVar("dr_only_melee", "0", "Determine to force using melee.", _, true, 0.0, true, 1.0);
+
 	g_GameConVars = new StringMap();
 	
 	//Track all ConVars not controlled by this plugin

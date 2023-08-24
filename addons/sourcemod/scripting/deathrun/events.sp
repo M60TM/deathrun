@@ -175,7 +175,12 @@ public void EventHook_TeamplayRoundWin(Event event, const char[] name, bool dont
 				CPrintToChat(client, PLUGIN_TAG ... " %t", "RoundWin_Runners");
 			
 			if (TF2_GetClientTeam(client) == TFTeam_Runners)
-				Queue_AwardPoints(client, dr_queue_points.IntValue);
+			{
+				if (IsPlayerAlive(client))
+					Queue_AwardPoints(client, dr_queue_points.IntValue * 2);
+				else
+					Queue_AwardPoints(client, dr_queue_points.IntValue);
+			}
 		}
 	}
 }
